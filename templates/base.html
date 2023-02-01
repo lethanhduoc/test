@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>
+      {% block title %}
+      Kingdom Mobile
+      {% endblock%}
+  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>KINGDOME MOBILE</h1>
+  <p>Công Nghệ hàng đầu</p>
+</div>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" ><img src="../static/uploads/logo-web.png" style="width: 60px"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+      </li>
+
+      {% if current_user.is_authenticated %}
+          <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Cart: {{ current_user.name }}</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login_page') }}">Login</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+
+      </li>
+    </ul>
+      {% endif %}
+  </div>
+</nav>
+
+
+{% block content %}
+<table class="table table-hover table-dark" style="margin-top: 30px">
+        <thead>
+            <tr>
+                <!-- Your Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Active</th>
+                <th scope="col">Price</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your rows inside the table HERE: -->
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.active }}</td>
+                    <td>{{ item.price }}$</td>
+                    <td>
+                        <button class="btn btn-outline btn-info">More Info</button>
+                        <button class="btn btn-outline btn-success">Purchase this Item</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="container" style="margin-top:30px">
+
+    </div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+           {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  {{ message }}
+              </div>
+           {% endfor %}
+        {% endif %}
+      {% endwith %}
+{% endblock %}
+{% block footer %}
+<footer>
+  <div class="container">
+         <!--Bắt Đầu Nội Dung Giới Thiệu-->
+         <div class="noi-dung about">
+             <h2>Về Chúng Tôi</h2>
+             <p>Công việc đầu tiên có ý nghĩa rất quan trọng. Nó giúp bạn làm quen với môi trường làm việc chuyên nghiệp. Thông qua công việc đầu tiên, bạn không chỉ học được kinh nghiệm mà nó còn dạy bạn các kỹ năng sống cần thiết. Công ty TNHH Công Nghệ KINGDOMMOBILE vận hành chuỗi cửa hàng KINGDOMMOBILE, được thành lập năm 2021 với tư cách một hệ thống uy tín chuyên kinh doanh các mặt hàng công nghệ chính hãng, nổi bật là điện thoại di động, máy tính bảng, laptop, phụ kiện, linh kiện.</p>
+         </div>
+         <!--Kết Thúc Nội Dung Giới Thiệu-->
+         <!--Bắt Đầu Nội Dung Đường Dẫn-->
+         <div class="noi-dung links">
+             <h2>Đường Dẫn</h2>
+             <ul>
+                 <li><a href="index.php">Trang Chủ</a></li>
+                 <li><a href="#">Về Chúng Tôi</a></li>
+                 <li><a href="#">Dịch vụ bảo hành điện thoại</a></li>
+                 <li><a href="#">Trung tâm bảo hành chính hãng</a></li>
+                 <li><a href="#">Tuyển dụng</a></li>
+             </ul>
+         </div>
+         <!--Kết Thúc Nội Dung Đường Dẫn-->
+         <!--Bắt Đâu Nội Dung Liên Hệ-->
+         <div class="noi-dung contact">
+             <h2>Thông Tin Liên Hệ</h2>
+             <ul class="info">
+                 <li>
+                     <span><i class="fa fa-map-marker"></i></span>
+                     <span>Đường Số 1<br />
+                         Quận 1, Thành Phố Hồ Chí Minh, Việt Nam</span>
+                 </li>
+                 <li>
+                     <span><i class="fa fa-phone"></i></span>
+                     <p><a href="#">+84 123 456 789</a>
+                         <br />
+                         <a href="#">+84 987 654 321</a></p>
+                 </li>
+                <li>
+                     <span><i class="fa fa-envelope"></i></span>
+                     <p><a href="#">kingdommobile@gmail.com</a></p>
+                </li>
+                 <li>
+                     <form class="form">
+                         <input type="email" class="form__field" placeholder="Đăng Ký Subscribe Email" />
+                         <button type="button" class="btn btn--primary  uppercase">Gửi</button>
+                     </form>
+                 </li>
+             </ul>
+         </div>
+         <!--Kết Thúc Nội Dung Liên Hệ-->
+     </div>
+  <style>
+    .container{
+     display: flex;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     flex-direction: row;
+     margin-top: 50px;
+ }
+
+ /*Thiết Lập Cho Thành Phần Nội Dung Giới Thiệu*/
+ footer .container .noi-dung{
+     margin-right: 30px;
+ }
+footer  .container .noi-dung.about{
+     width:40%;
+ }
+ footer .container .noi-dung.about h2{
+     position: relative;
+     color: #000000; /*Tiêu đề*/
+     font-weight: 500;
+     margin-bottom: 15px;
+ }
+ footer .container .noi-dung.about h2:before{
+     content: '';
+     position: absolute;
+     bottom: -5px;
+     left: 0;
+     width: 50px;
+     height: 2px;
+     background: #f00;
+ }
+footer .container .noi-dung.about p{
+     color: #000000; /*nội dung*/
+ }
+.links h2{
+     position: relative;
+     color: #fff;
+     font-weight: 500;
+     margin-bottom: 15px;
+ }
+
+ .links h2{
+     position: relative;
+     color: #000000; /*Tiêu đề*/
+     font-weight: 500;
+     margin-bottom: 15px;
+ }
+.links h2::before{
+     content: '';
+     position: absolute;
+     bottom: -5px;
+     left: 0;
+     width: 50px;
+     height: 2px;
+     background: #f00;
+ }
+.links{
+    position: relative;
+    width: 25%;
+ }
+ .links ul li{
+     list-style: none;
+ }
+ .links ul li a{
+     color: #000000; /*Nội dung*/
+     text-decoration: none;
+     margin-bottom: 20px;
+     display: inline-block;
+ }
+.links ul li a:hover{
+     color: #fff;
+ }
+
+ .contact h2{
+     position: relative;
+     color: #000000; /*Tiêu đề*/
+     font-weight: 500;
+     margin-bottom: 15px;
+ }
+.contact h2::before{
+     content: '';
+     position: absolute;
+     bottom: -5px;
+     left: 0;
+     width: 50px;
+     height: 2px;
+     background: #f00;
+ }
+.contact{
+     width: calc(35% - 60px);
+     margin-right: 0 !important;
+ }
+.contact .info{
+     position: relative;
+ }
+ .contact .info li{
+     display: flex;
+     margin-bottom: 16px;
+ }
+ .contact .info li span:nth-child(1) {
+     color: #ffffff;
+     font-size: 20px;
+     margin-right: 10px;
+ }
+.contact .info li span{
+     color: #000000; /*nội dung 1*/
+ }
+.contact .info li a{
+     color: #000000; /*nội dung 2*/
+     text-decoration: none;
+ }
+
+ .btn {
+     display: inline-block;
+     background: transparent;
+     color: inherit;
+     font: inherit;
+     border: 0;
+     outline: 0;
+     padding: 0;
+     margin-top:16px;
+     transition: all 200ms ease-in;
+     cursor: pointer;
+ }
+ .btn--primary {
+     background: #000000;
+     color: #fff; /*nút gửi*/
+     box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
+     border-radius: 2px;
+     padding: 8px 24px;
+ }
+ .btn--primary:hover {
+     background: #f00;
+ }
+ .btn--primary:active {
+     background: #f00;
+     box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, .2);
+ }
+.form__field {
+     width: 90%;
+     background: #ffffff;
+     color: #a3a3a3;
+     font: inherit;
+     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .1);
+     border: 0;
+     outline: 0;
+     padding: 8px 4px;
+ }
+
+ @media  (max-width: 768px){
+     footer{
+         padding: 40px;
+              }
+     footer .container{
+         flex-direction: column;
+     }
+     footer .container .noi-dung{
+         margin-right: 0;
+         margin-bottom: 140px;
+     }
+     footer .container, .noi-dung.about, .links, .contact{
+         width: 100%;
+     }
+ }
+  </style>
+</footer>
+{% endblock %}
+
+</body>
+
+</html>
